@@ -1,6 +1,10 @@
+# encoding: UTF-8
+
 class PostsController < ApplicationController
   
-  http_basic_authenticate_with :name => "dhh", :password => "secret", :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show]
+
+  #http_basic_authenticate_with :name => "dhh", :password => "secret", :except => [:index, :show]
 
   # GET /posts
   # GET /posts.json
@@ -27,6 +31,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
+
     @post = Post.new
 
     respond_to do |format|
@@ -37,13 +42,15 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find_by_id(params[:id])
+    redirect_to(:back, :alert => "Não autorizado") if @post.nil?
   end
 
   # POST /posts
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save
@@ -59,7 +66,8 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find_by_id(params[:id])
+    redirect_to(:back, :alert => "Não autorizado") if @post.nil?
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
@@ -75,7 +83,12 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find_by_id(params[:id])
+    if @post.nil?
+      redirect_to(:back, :alert => "Não autorizado")
+      return
+    end
+
     @post.destroy
 
     respond_to do |format|
