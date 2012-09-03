@@ -1,4 +1,18 @@
 Blog::Application.routes.draw do
+  devise_for :admins, :controllers => { :sessions => 'admin/sessions', :registrations => 'admin/registrations' }
+
+  namespace :admin do
+      resources :users
+
+      authenticated :admin do
+        root :to => 'admins#dashboard'
+      end
+
+      devise_scope :admin do
+        root :to => 'sessions#new'
+      end
+  end
+
   devise_for :users
 
   resources :posts do

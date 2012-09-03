@@ -25,6 +25,9 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li><%= link_to "Browse Posts", posts_path %></li>
+          <% if admin_signed_in? %>
+            <li><%= link_to "Browse Users", admin_users_path %></li>
+          <% end %>
           <li><%= render 'devise/menu/registration_items' %></li>
           <li><%= render 'devise/menu/login_items' %></li>
         </ul>
