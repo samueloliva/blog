@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -25,6 +24,8 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li><%= link_to "Browse Posts", posts_path %></li>
+          <li><%= link_to "Celebrations", celebrations_path %></li>
+          <li><%= link_to "Invite Friends" %></li>
           <% if admin_signed_in? %>
             <li><%= link_to "Browse Users", admin_users_path %></li>
           <% end %>

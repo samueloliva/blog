@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   def index
-  	@name = current_user.name if current_user
+  	@friends = current_user.upcoming_birthdays if current_user
+  	@photos = current_user.photos_together(@friends) if @friends
+  	@dates_coming = Celebration.upcoming
   end
 end

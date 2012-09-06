@@ -1,4 +1,8 @@
 Blog::Application.routes.draw do
+  require 'api_constraints'
+
+  match '/auth/:provider/callback' => 'authentications#create'
+  
   devise_for :admins, :controllers => { :sessions => 'admin/sessions', :registrations => 'admin/registrations' }
 
   namespace :admin do
@@ -13,11 +17,22 @@ Blog::Application.routes.draw do
       end
   end
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => 'registrations'}
 
   resources :posts do
     resources :comments
   end
+
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true) do
+      get 'celebrations/(:til)' => 'celebrations#index'
+      get 'facebook/upcoming_birthdays/(:til)' => 'facebook#upcoming_birthdays'
+      get 'facebook/photos_together/(:til)' => 'facebook#photos_together' 
+    end
+  end
+
+  resources :celebrations
+
 
   root :to => "home#index"
 

@@ -1,4 +1,39 @@
 
-<h1> Hello 	<%= @name %></h1>
+<h1> Hello 	<%= current_user.name if current_user %></h1>
+<br />
+<% @dates_coming.each do |date_coming| %>
+<ul>
+	<li>
+		 <%= date_coming['name'] %> - <%= date_coming['celebrated_on'] %> - <%=date_coming['message'] %>
+	</li>
+</ul>
+<% end %>
+<br />
 
+<% if @friends %>
+<ul>
+	<% @friends.each do |friend| %>
+	<li>
+		<div class="thumbnail" style="display: inline-block">
+		<%= image_tag friend['pic_small'] %> </div>
+		
+		<%= "#{friend['name']} (#{friend['birthday_date']})" %>
+		<ul>
+			<% @photos[friend['uid']].each do |photo| %>
+			<li>
+				<%= link_to image_tag(photo['src_small']), 
+					"http://staging.ipostal.com.br/send_postcard/photo?photosrc=#{photo['src_big']}", 
+					:confirm => "Are you sure?" %> - 
+				<%= Time.at photo['created'] %> - 
+				<%= photo['like_info'] %>
+
+			</li>
+			<% end %>
+		</ul>
+	</li>
+	<% end %>
+</ul>
+
+
+<% end %>
 <%= link_to "My Blog", posts_path %>
