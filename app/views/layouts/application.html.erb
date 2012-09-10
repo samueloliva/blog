@@ -30,7 +30,7 @@
 
     FB.getLoginStatus(function(response) {
       if (response.status === 'not_authorized' || response.status === 'connected') {
-        location.href="/auth/facebook"
+        window.location.href="/auth/facebook"
       } 
     });
 
