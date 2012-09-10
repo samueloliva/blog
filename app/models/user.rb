@@ -63,9 +63,11 @@ class User < ActiveRecord::Base
                 )
               ) 
               ORDER BY birthday_date"
+=begin
       query = "SELECT uid, name, birthday_date, pic_small
                FROM user 
                WHERE uid IN (100001943632811, 1388897928)"
+=end
 
       friends = facebook { |fb| fb.fql_query(query) }
     end
