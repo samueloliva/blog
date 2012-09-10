@@ -2,7 +2,11 @@ class CelebrationsController < ApplicationController
   # GET /celebrations
   # GET /celebrations.json
   def index
-    @celebrations = Celebration.where("celebrated_on >= ?", Time.now).order("celebrated_on ASC")
+    #@celebrations = Celebration.where("celebrated_on >= ?", Time.now).order("celebrated_on ASC").page(params[:page])
+
+    @search = Celebration.search(params[:q])
+    @celebrations = @search.result.order("celebrated_on ASC").page(params[:page]).per(3)
+    @search.build_condition
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +29,7 @@ class CelebrationsController < ApplicationController
   # GET /celebrations/new.json
   def new
     @celebration = Celebration.new
-
+facebook_controller.
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @celebration }

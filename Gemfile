@@ -19,6 +19,10 @@ gem "koala"
 
 gem 'date_validator'
 
+gem 'kaminari'
+
+gem 'ransack'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

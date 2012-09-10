@@ -12,6 +12,39 @@
 </head>
 
 <body>
+
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '269346943176907', // App ID
+      channelUrl :  '//'+window.location.hostname+'/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    <% if !user_signed_in? and !admin_signed_in? %>
+
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'not_authorized' || response.status === 'connected') {
+        location.href="http://localhost:3000/auth/facebook"
+      } 
+    });
+
+    <% end %>
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -25,7 +58,7 @@
         <ul class="nav">
           <li><%= link_to "Browse Posts", posts_path %></li>
           <li><%= link_to "Celebrations", celebrations_path %></li>
-          <li><%= link_to "Invite Friends" %></li>
+          <li><%= link_to "Invite Friends", "/invite" %></li>
           <% if admin_signed_in? %>
             <li><%= link_to "Browse Users", admin_users_path %></li>
           <% end %>

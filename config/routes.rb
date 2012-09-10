@@ -33,6 +33,7 @@ Blog::Application.routes.draw do
 
   resources :celebrations
 
+  get '/invite' => 'home#invite'
 
   root :to => "home#index"
 
