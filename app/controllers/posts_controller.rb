@@ -42,8 +42,11 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = current_user.posts.find_by_id(params[:id])
-    redirect_to(:back, :alert => "Não autorizado") if @post.nil?
+    @post = Post.find_by_id(params[:id])
+
+    unless admin_signed_in?
+      redirect_to("/", :alert => "Não autorizado") if current_user.id != @post.user_id
+    end
   end
 
   # POST /posts
@@ -66,8 +69,12 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
-    @post = current_user.posts.find_by_id(params[:id])
-    redirect_to(:back, :alert => "Não autorizado") if @post.nil?
+
+    @post = Post.find_by_id(params[:id])
+
+    unless admin_signed_in?
+      redirect_to("/", :alert => "Não autorizado") if current_user.id != @post.user_id
+    end
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
@@ -83,10 +90,10 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    @post = current_user.posts.find_by_id(params[:id])
-    if @post.nil?
-      redirect_to(:back, :alert => "Não autorizado")
-      return
+    @post = Post.find_by_id(params[:id])
+
+    unless admin_signed_in?
+      redirect_to("/", :alert => "Não autorizado") if current_user.id != @post.user_id
     end
 
     @post.destroy

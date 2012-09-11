@@ -16,6 +16,7 @@
 
 <div id="fb-root"></div>
 <script>
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '269346943176907', // App ID
@@ -27,8 +28,9 @@
     FB.Canvas.setAutoGrow();
 
     <% if !user_signed_in? and !admin_signed_in? %>
-
+    
     FB.getLoginStatus(function(response) {
+
       if (response.status === 'not_authorized' || response.status === 'connected') {
         top.location.href = "auth/facebook"
         
