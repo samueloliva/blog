@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  has_many :posts
-  has_many :authentications
+  has_many :posts, :dependent => true
+  has_many :authentications, :dependent => true
 
   before_save :ensure_authentication_token
   
