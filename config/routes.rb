@@ -7,6 +7,7 @@ Blog::Application.routes.draw do
 
   namespace :admin do
       resources :users
+      resources :celebrations
 
       authenticated :admin do
         root :to => 'admins#dashboard'
@@ -30,8 +31,6 @@ Blog::Application.routes.draw do
       get 'facebook/photos_together/(:til)' => 'facebook#photos_together' 
     end
   end
-
-  resources :celebrations
 
   get '/invite' => 'home#invite'
 

@@ -1,0 +1,28 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/">Some Blog</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><%= link_to "Browse Posts", posts_path %></li>
+
+          <% if admin_signed_in? %>
+            <li><%= link_to "Celebrations", admin_celebrations_path %></li>
+          <% end %>
+
+          <li><%= link_to "Invite Friends", "/invite" %></li>
+          <% if admin_signed_in? %>
+            <li><%= link_to "Browse Users", admin_users_path %></li>
+          <% end %>
+          <li><%= render 'devise/menu/registration_items' %></li>
+          <li><%= render 'devise/menu/login_items' %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

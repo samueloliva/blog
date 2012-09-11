@@ -1,8 +1,18 @@
 <p>
-<input type="button"
-  onclick="sendRequestViaMultiFriendSelector(); return false;"
-  value="Send Request to Many Users with MFS"
-/>
+  <% if current_user.facebook_token %>
+    
+      <input type="button"
+      onclick="sendRequestViaMultiFriendSelector(); return false;"
+      value="Send Request to Many Users with MFS"
+      />
+
+  <% else  %>
+
+      You need to logon to invite friends.
+
+      <%= link_to "Click Here!", "/auth/facebook" %>
+
+  <% end %>
 </p>
 
 <script>
