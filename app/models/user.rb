@@ -37,12 +37,8 @@ class User < ActiveRecord::Base
   def facebook 
     @facebook ||= Koala::Facebook::API.new(facebook_token)
     block_given? ? yield(@facebook) : @facebook
-  #rescue Koala::Facebook::APIError => e
-  #  nil
-  end
-
-  def get_me
-    facebook { |fb| fb.get_object(:me) }
+  rescue Koala::Facebook::APIError => e
+    nil
   end
 
   def upcoming_birthdays(til = 1.week.from_now)
